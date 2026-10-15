@@ -1,0 +1,5 @@
+Nume: Camelia-Ioana Boghici
+Grupa: 4LF631
+Laborator: 2
+Branch: camelia/Camelia-Ioana
+Subiect: Lucrul colaborativ cu Git și alegerea unui API
