@@ -1,8 +1,8 @@
-# Numele aplicației
+# CS2 FACEIT STATS TRACKER
 ## Membrii echipei
-- Prenume Nume
-- Prenume Nume
-- Prenume Nume
+- Camelia Boghici
+- Tudor Batrineanu
+- Cosmin Alecu
 ## Descriere
 Scurtă descriere a aplicației și a problemei abordate.
 ## Template selectat
@@ -26,5 +26,22 @@ reală.
 ## Rezultatul testării request-ului
 - Data testării:
 - Cod HTTP sau mesajul de eroare:
-Laboratorul_2_Git_si_API.md 2026-10-15
+- Observații, fără chei sau tokenuri:
+## Funcționalități
+- funcționalitatea 1;
+- funcționalitatea 2;
+- funcționalitatea 3.
+## Gestionarea stărilor
+- Loading:
+- Success:
+- Empty:
+- Error:
+## Responsabilități
+- Student 1:
+- Student 2:
+- Student 3:
+## Instrucțiuni de configurare și rulare
+În acest laborator, documentați pașii necesari pentru testarea request-ului. Pașii
+de configurare și rulare a aplicației se completează în etapa de implementare.
+
 
