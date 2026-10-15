@@ -1,0 +1,5 @@
+Nume: Batrineanu Tudor 
+Grupa: 4LF631
+Laborator: 2
+Branch: student/Tudor-Batrineanu
+Subiect:Lucrul colaborativ cu Git si alegerea unui API
