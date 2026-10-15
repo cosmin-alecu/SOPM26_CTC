@@ -1,0 +1,5 @@
+Nume: Cosmin Alecu
+Grupa: 4LF631
+Laborator: 2
+Branch: student/cosmin-alecu
+Subiect: ...
