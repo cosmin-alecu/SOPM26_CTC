@@ -3,66 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#101113">
-    <title>CS2 FACEIT Stats Tracker</title>
+    <meta name="theme-color" content="#ff007f">
+    <title>CS2 FACEIT Cyber Tracker</title>
+    
+    <!-- Fonturi Futuristice -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Efectul de Flăcări Roz -->
+    <div class="flame-container" aria-hidden="true">
+        <div class="flame-particle"></div><div class="flame-particle"></div>
+        <div class="flame-particle"></div><div class="flame-particle"></div>
+        <div class="flame-particle"></div><div class="flame-particle"></div>
+        <div class="flame-particle"></div><div class="flame-particle"></div>
+        <div class="flame-particle"></div><div class="flame-particle"></div>
+        <div class="flame-particle"></div><div class="flame-particle"></div>
+    </div>
+
+    <!-- Rețeaua Grid Futuristică -->
+    <div class="cyber-grid" aria-hidden="true"></div>
+
     <main class="app-shell">
         <header class="site-header">
             <div class="brand-icon" aria-hidden="true">F</div>
             <div class="brand-content">
-                <p class="eyebrow">PLAYER ANALYTICS</p>
-                <h1>CS2 FACEIT <span>STATS TRACKER</span></h1>
+                <p class="eyebrow">// SYSTEM.ANALYTICS</p>
+                <h1>CS2 FACEIT <span>TRACKER</span></h1>
             </div>
         </header>
 
         <section class="search-section" aria-label="Caută un jucător">
-            <p class="intro-text">Toate statisticile tale FACEIT, într-un singur loc.</p>
+            <p class="intro-text">Introducepti parametrul țintă pentru scanarea bazei de date.</p>
 
-            <form id="search-form">
+            <form id="search-form" class="cyber-form">
                 <label for="nickname" class="visually-hidden">Nickname FACEIT</label>
-                <span class="search-icon" aria-hidden="true">⌕</span>
-                <input id="nickname" name="nickname" type="text" placeholder="Introdu nickname-ul FACEIT" autocomplete="off" required>
-                <button type="submit">
-                    <span>Caută jucător</span>
-                    <span aria-hidden="true">→</span>
+                <div class="input-wrapper">
+                    <span class="search-icon" aria-hidden="true">⌕</span>
+                    <input id="nickname" name="nickname" type="text" placeholder="INTRODU NICKNAME..." autocomplete="off" required>
+                </div>
+                <button type="submit" class="cyber-button">
+                    <span>SCANEAZĂ</span>
                 </button>
             </form>
         </section>
 
         <section id="loading-state" class="state-card loading-card" role="status" aria-live="polite" hidden>
-            <div class="spinner" aria-hidden="true"></div>
-            <p>Se încarcă datele jucătorului...</p>
+            <div class="cyber-spinner" aria-hidden="true"></div>
+            <p>Se accesează mainframe-ul...</p>
         </section>
 
         <section id="error-state" class="state-card error-card" role="alert" hidden>
-            <span class="state-icon" aria-hidden="true">!</span>
-            <p>Jucătorul nu a fost găsit. Verifică nickname-ul sau conexiunea!</p>
+            <span class="state-icon" aria-hidden="true">⚠</span>
+            <p>Eroare 404: Jucătorul nu a fost găsit în baza de date!</p>
         </section>
 
         <section id="empty-state" class="state-card empty-card">
-            <div class="empty-icon" aria-hidden="true">↗</div>
-            <h2>Începe căutarea</h2>
-            <p>Introdu un nickname pentru a vedea statisticile.</p>
+            <div class="empty-icon" aria-hidden="true">⚲</div>
+            <h2>AȘTEPTARE COMANDĂ</h2>
+            <p>Sistemul este pregătit. Inițiază o căutare.</p>
         </section>
 
         <section id="dashboard-content" class="dashboard" hidden>
-            <article class="player-card">
-                <!-- AM ADĂUGAT ID-UL AICI: -->
-                <div class="player-avatar" id="player-avatar" aria-hidden="true">CS2</div>
+            <article class="player-card cyber-panel">
+                <div class="player-avatar cyber-avatar" id="player-avatar" aria-hidden="true">CS2</div>
                 <div class="player-info">
-                    <p class="eyebrow">PROFIL DE JUCĂTOR</p>
+                    <p class="eyebrow">// PROFIL IDENTIFICAT</p>
                     <h2 id="player-name">Nickname</h2>
-                    <p class="player-game">Counter-Strike 2 · FACEIT</p>
+                    <p class="player-game">C-S 2 // SYSTEM: FACEIT</p>
                 </div>
             </article>
 
             <section class="dashboard-section">
                 <div class="section-heading">
                     <div>
-                        <p class="eyebrow">PERFORMANȚĂ</p>
-                        <h2>Statistici</h2>
+                        <p class="eyebrow">// METRICE DE PERFORMANȚĂ</p>
+                        <h2>STATISTICI GLOBALE</h2>
                     </div>
                 </div>
                 <div id="stats-cards" class="stats-grid"></div>
@@ -71,28 +90,21 @@
             <section class="dashboard-section matches-section">
                 <div class="section-heading">
                     <div>
-                        <p class="eyebrow">ULTIMELE REZULTATE</p>
-                        <h2>Istoric meciuri</h2>
+                        <p class="eyebrow">// DECRIPTARE ISTORIC</p>
+                        <h2>ULTIMELE MISIUNI</h2>
                     </div>
-                    <span class="matches-caption">W victorie · L înfrângere</span>
                 </div>
                 <div id="matches-list" class="matches-list"></div>
-                <p id="matches-empty" class="matches-empty" hidden>Nu există meciuri recente disponibile.</p>
+                <p id="matches-empty" class="matches-empty" hidden>Nu există date de misiune recente.</p>
             </section>
         </section>
 
         <footer class="site-footer">
-            <span class="footer-dot" aria-hidden="true"></span>
-            <span>CS2 FACEIT STATS TRACKER</span>
-            <span class="footer-divider">·</span>
-            <span>Statistici pentru jucători</span>
+            <span>CS2 NEON TRACKER // V.4.0</span>
+            <span class="footer-divider">|</span>
+            <span>SECURE CONNECTION</span>
         </footer>
     </main>
-
-    <div class="flame-effect" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span>
-    </div>
 
     <script type="module" src="app.js"></script>
 </body>
