@@ -6,6 +6,7 @@ const emptyState = document.getElementById("empty-state");
 const dashboard = document.getElementById("dashboard-content");
 
 const playerName = document.getElementById("player-name");
+const playerAvatar = document.getElementById("player-avatar"); 
 const statsContainer = document.getElementById("stats-cards");
 const matchesContainer = document.getElementById("matches-list");
 const matchesEmpty = document.getElementById("matches-empty");
@@ -13,7 +14,6 @@ const matchesEmpty = document.getElementById("matches-empty");
 const searchForm = document.getElementById("search-form");
 const nicknameInput = document.getElementById("nickname");
 
-// Funcția universală pentru căutare
 async function cautaJucator(nickname) {
     showState("loading");
     try {
@@ -24,7 +24,6 @@ async function cautaJucator(nickname) {
     }
 }
 
-// Căutare la trimiterea formularului
 searchForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const nickname = nicknameInput.value.trim();
@@ -90,13 +89,10 @@ function renderStats(stats) {
     statsContainer.append(...cards);
 }
 
-// Modificarea principală: Transformăm corect timpul pentru a afișa Data și Ora
 function formatMatchDate(timestamp) {
     if (!timestamp) return "Dată indisponibilă";
     
-    // FACEIT trimite timpul în secunde (10 cifre). JavaScript folosește milisecunde.
     const validTimestamp = String(timestamp).length === 10 ? timestamp * 1000 : timestamp;
-    
     const date = new Date(validTimestamp);
     return date.toLocaleString("ro-RO", { 
         day: "2-digit", 
@@ -134,7 +130,6 @@ function renderMatches(matches) {
         }
 
         const date = document.createElement("p");
-        // Aici afișăm data și ora procesate
         date.textContent = `Jucat la: ${formatMatchDate(match.date)}`;
 
         const score = document.createElement("p");
@@ -155,6 +150,16 @@ function renderDashboard(data) {
     }
 
     playerName.textContent = data.player.nickname || "Jucător FACEIT";
+
+    // Imaginea de profil implicită dacă jucătorul nu are una setată
+    const defaultAvatarUrl = "https://corporate.faceit.com/wp-content/uploads/2021/04/faceit-app-logo.png";
+    const finalAvatar = data.player.avatar ? data.player.avatar : defaultAvatarUrl;
+
+    // Inserăm imaginea (fie cea reală, fie cea default) și ascundem textul "CS2"
+    playerAvatar.innerHTML = `<img src="${finalAvatar}" alt="Avatar ${data.player.nickname}" style="width: 100%; height: 100%; object-fit: cover; border-radius: inherit;">`;
+    playerAvatar.style.padding = "0";
+    playerAvatar.style.overflow = "hidden"; // Asigură tăierea perfectă pe margini
+
     renderStats(data.stats);
     renderMatches(data.matches);
     showState("dashboard");
