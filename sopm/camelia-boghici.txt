@@ -1,0 +1,5 @@
+Nume: Boghici Camelia-Ioana
+Grupa: 4LF631
+Laborator: 2
+Branch: student/camelia-boghici
+Subiect:Lucrul colaborativ cu Git
