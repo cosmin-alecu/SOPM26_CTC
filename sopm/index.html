@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Testare API FACEIT</title>
+    <style>
+        /* Puțin CSS de bază pentru a arăta mai bine pe ecran */
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #121212; color: #ffffff; }
+        .card { background: #1e1e1e; padding: 20px; margin-top: 20px; border-radius: 8px; max-width: 400px; }
+        .hidden { display: none; }
+        input, button { padding: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Căutare Jucător FACEIT</h1>
+    
+    <input type="text" id="inputNume" placeholder="Introdu numele (ex: TuXeNo)">
+    <button id="butonCauta">Caută Jucător</button>
+
+    <!-- Mesaj de încărcare -->
+    <p id="loadingMesaj" class="hidden">Se încarcă datele...</p>
+    <!-- Mesaj de eroare -->
+    <p id="errorMesaj" class="hidden" style="color: red;">Jucătorul nu a fost găsit sau a apărut o eroare.</p>
+
+    <!-- Aici vom afișa datele -->
+    <div id="dateJucator" class="card hidden">
+        <h2 id="numeAfisat">-</h2>
+        <p><strong>Nivel (Skill Level):</strong> <span id="nivelAfisat">-</span></p>
+        <p><strong>FACEIT ELO:</strong> <span id="eloAfisat">-</span></p>
+        <p><strong>K/D Ratio:</strong> <span id="kdAfisat">-</span></p>
+        <p><strong>Win Rate %:</strong> <span id="winrateAfisat">-</span></p>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
