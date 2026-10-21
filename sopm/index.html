@@ -1,200 +1,99 @@
-
 <!DOCTYPE html>
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#101113">
-
     <title>CS2 FACEIT Stats Tracker</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <main class="app-shell">
-
-        <!-- Header -->
         <header class="site-header">
             <div class="brand-icon" aria-hidden="true">F</div>
-
             <div class="brand-content">
                 <p class="eyebrow">PLAYER ANALYTICS</p>
-
-                <h1>
-                    CS2 FACEIT
-                    <span>STATS TRACKER</span>
-                </h1>
+                <h1>CS2 FACEIT <span>STATS TRACKER</span></h1>
             </div>
         </header>
 
-        <!-- Search -->
         <section class="search-section" aria-label="Caută un jucător">
-            <p class="intro-text">
-                Toate statisticile tale FACEIT, într-un singur loc.
-            </p>
+            <p class="intro-text">Toate statisticile tale FACEIT, într-un singur loc.</p>
 
             <form id="search-form">
-                <label for="nickname" class="visually-hidden">
-                    Nickname FACEIT
-                </label>
-
+                <label for="nickname" class="visually-hidden">Nickname FACEIT</label>
                 <span class="search-icon" aria-hidden="true">⌕</span>
-
-                <input
-                    id="nickname"
-                    name="nickname"
-                    type="text"
-                    placeholder="Introdu nickname-ul FACEIT"
-                    autocomplete="off"
-                    required
-                >
-
+                <input id="nickname" name="nickname" type="text" placeholder="Introdu nickname-ul FACEIT" autocomplete="off" required>
                 <button type="submit">
                     <span>Caută jucător</span>
                     <span aria-hidden="true">→</span>
                 </button>
             </form>
-
-            <!-- Player selector for demo data -->
-            <div class="demo-player-selector">
-                <label for="player-selector">
-                    Sau selectează un jucător demonstrativ:
-                </label>
-
-                <select id="player-selector">
-                    <option value="">Selectează un jucător</option>
-                </select>
-            </div>
         </section>
 
-        <!-- Loading state -->
-        <section
-            id="loading-state"
-            class="state-card loading-card"
-            role="status"
-            aria-live="polite"
-            hidden
-        >
+        <section id="loading-state" class="state-card loading-card" role="status" aria-live="polite" hidden>
             <div class="spinner" aria-hidden="true"></div>
-
             <p>Se încarcă datele jucătorului...</p>
         </section>
 
-        <!-- Error state -->
-        <section
-            id="error-state"
-            class="state-card error-card"
-            role="alert"
-            hidden
-        >
+        <section id="error-state" class="state-card error-card" role="alert" hidden>
             <span class="state-icon" aria-hidden="true">!</span>
-
-            <p>
-                Jucătorul nu a fost găsit. Verifică nickname-ul
-                sau conexiunea!
-            </p>
+            <p>Jucătorul nu a fost găsit. Verifică nickname-ul sau conexiunea!</p>
         </section>
 
-        <!-- Initial empty state -->
-        <section
-            id="empty-state"
-            class="state-card empty-card"
-        >
+        <section id="empty-state" class="state-card empty-card">
             <div class="empty-icon" aria-hidden="true">↗</div>
-
             <h2>Începe căutarea</h2>
-
-            <p>
-                Introdu un nickname sau selectează un jucător
-                demonstrativ pentru a vedea statisticile.
-            </p>
+            <p>Introdu un nickname pentru a vedea statisticile.</p>
         </section>
 
-        <!-- Player dashboard -->
         <section id="dashboard-content" class="dashboard" hidden>
-
-            <!-- Player profile -->
             <article class="player-card">
-                <div class="player-avatar" aria-hidden="true">
-                    CS2
-                </div>
-
+                <div class="player-avatar" aria-hidden="true">CS2</div>
                 <div class="player-info">
                     <p class="eyebrow">PROFIL DE JUCĂTOR</p>
-
                     <h2 id="player-name">Nickname</h2>
-
-                    <p class="player-game">
-                        Counter-Strike 2 · FACEIT
-                    </p>
+                    <p class="player-game">Counter-Strike 2 · FACEIT</p>
                 </div>
             </article>
 
-            <!-- Statistics -->
             <section class="dashboard-section">
                 <div class="section-heading">
                     <div>
                         <p class="eyebrow">PERFORMANȚĂ</p>
-
                         <h2>Statistici</h2>
                     </div>
                 </div>
-
                 <div id="stats-cards" class="stats-grid"></div>
             </section>
 
-            <!-- Match history -->
             <section class="dashboard-section matches-section">
                 <div class="section-heading">
                     <div>
                         <p class="eyebrow">ULTIMELE REZULTATE</p>
-
                         <h2>Istoric meciuri</h2>
                     </div>
-
-                    <span class="matches-caption">
-                        W victorie · L înfrângere
-                    </span>
+                    <span class="matches-caption">W victorie · L înfrângere</span>
                 </div>
-
                 <div id="matches-list" class="matches-list"></div>
-
-                <p id="matches-empty" class="matches-empty" hidden>
-                    Nu există meciuri recente disponibile.
-                </p>
+                <p id="matches-empty" class="matches-empty" hidden>Nu există meciuri recente disponibile.</p>
             </section>
-
         </section>
 
-        <!-- Footer -->
         <footer class="site-footer">
             <span class="footer-dot" aria-hidden="true"></span>
-
             <span>CS2 FACEIT STATS TRACKER</span>
-
             <span class="footer-divider">·</span>
-
             <span>Statistici pentru jucători</span>
         </footer>
-
     </main>
 
-    <!-- Decorative flames -->
     <div class="flame-effect" aria-hidden="true">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
     </div>
 
-    <!-- JavaScript -->
-    <script src="app.js" defer></script>
-    <script src="demo.js" defer></script>
+    <!-- Modulul JavaScript conectat corect -->
+    <script type="module" src="app.js"></script>
 </body>
 </html>

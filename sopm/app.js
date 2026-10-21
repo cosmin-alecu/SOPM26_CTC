@@ -1,3 +1,5 @@
+import { fetchAllPlayerData } from './api.js';
+
 const loadingState = document.getElementById("loading-state");
 const errorState = document.getElementById("error-state");
 const emptyState = document.getElementById("empty-state");
@@ -8,6 +10,28 @@ const statsContainer = document.getElementById("stats-cards");
 const matchesContainer = document.getElementById("matches-list");
 const matchesEmpty = document.getElementById("matches-empty");
 
+const searchForm = document.getElementById("search-form");
+const nicknameInput = document.getElementById("nickname");
+
+// Funcția universală pentru căutare
+async function cautaJucator(nickname) {
+    showState("loading");
+    try {
+        const data = await fetchAllPlayerData(nickname);
+        renderDashboard(data);
+    } catch (err) {
+        showState("error", "Jucătorul nu a fost găsit. Verifică nickname-ul!");
+    }
+}
+
+// Căutare la trimiterea formularului
+searchForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nickname = nicknameInput.value.trim();
+    if (!nickname) return;
+    cautaJucator(nickname);
+});
+
 function showState(state, message = "") {
     loadingState.hidden = true;
     errorState.hidden = true;
@@ -17,7 +41,7 @@ function showState(state, message = "") {
     if (state === "loading") {
         loadingState.hidden = false;
     } else if (state === "error") {
-        errorState.textContent = message || "A apărut o eroare.";
+        errorState.querySelector("p").textContent = message || "A apărut o eroare.";
         errorState.hidden = false;
     } else if (state === "empty") {
         emptyState.hidden = false;
@@ -27,86 +51,59 @@ function showState(state, message = "") {
 }
 
 function formatNumber(value, decimals = 0) {
-    if (value === null || value === undefined || value === "") {
-        return "—";
-    }
-
+    if (value === null || value === undefined || value === "") return "—";
     const number = Number(value);
-
-    if (!Number.isFinite(number)) {
-        return "—";
-    }
-
-    return number.toLocaleString("ro-RO", {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals
-    });
+    if (!Number.isFinite(number)) return "—";
+    return number.toLocaleString("ro-RO", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 }
 
 function createStatCard(title, value, description) {
     const card = document.createElement("div");
     card.className = "stat-card";
-
     const heading = document.createElement("h3");
     heading.textContent = title;
-
     const valueElement = document.createElement("p");
     valueElement.className = "stat-value";
     valueElement.textContent = value;
-
     const detail = document.createElement("span");
     detail.className = "stat-description";
     detail.textContent = description;
-
     card.append(heading, valueElement, detail);
-
     return card;
 }
 
 function renderStats(stats) {
     statsContainer.replaceChildren();
-
-    const winRate = stats.winRate === null ||
-        stats.winRate === undefined ||
-        stats.winRate === ""
-        ? "—"
-        : `${formatNumber(stats.winRate, 1)}%`;
+    
+    const winRate = stats.winRate ? `${formatNumber(stats.winRate, 1)}%` : "—";
+    const hsPercent = stats.headshotPercent ? `${formatNumber(stats.headshotPercent, 0)}%` : "—";
 
     const cards = [
-        createStatCard(
-            "Elo",
-            formatNumber(stats.elo),
-            "Punctaj FACEIT"
-        ),
-        createStatCard(
-            "K/D Ratio",
-            formatNumber(stats.kdRatio, 2),
-            "Eliminări raportate la decese"
-        ),
-        createStatCard(
-            "Win Rate",
-            winRate,
-            "Procentul meciurilor câștigate"
-        )
+        createStatCard("Elo", formatNumber(stats.elo), "Punctaj FACEIT"),
+        createStatCard("Meciuri", formatNumber(stats.totalMatches), "Total meciuri jucate"),
+        createStatCard("Win Rate", winRate, "Procentul meciurilor câștigate"),
+        createStatCard("Win Streak", formatNumber(stats.winStreak), "Victorii consecutive"),
+        createStatCard("K/D Ratio", formatNumber(stats.kdRatio, 2), "Media eliminări/decese"),
+        createStatCard("Headshot %", hsPercent, "Procentaj mediu headshots")
     ];
-
+    
     statsContainer.append(...cards);
 }
 
-function formatMatchDate(dateValue) {
-    if (!dateValue) {
-        return "Dată indisponibilă";
-    }
-
-    const date = new Date(dateValue);
-
-    if (Number.isNaN(date.getTime())) {
-        return String(dateValue);
-    }
-
-    return date.toLocaleString("ro-RO", {
-        dateStyle: "medium",
-        timeStyle: "short"
+// Modificarea principală: Transformăm corect timpul pentru a afișa Data și Ora
+function formatMatchDate(timestamp) {
+    if (!timestamp) return "Dată indisponibilă";
+    
+    // FACEIT trimite timpul în secunde (10 cifre). JavaScript folosește milisecunde.
+    const validTimestamp = String(timestamp).length === 10 ? timestamp * 1000 : timestamp;
+    
+    const date = new Date(validTimestamp);
+    return date.toLocaleString("ro-RO", { 
+        day: "2-digit", 
+        month: "2-digit", 
+        year: "numeric", 
+        hour: "2-digit", 
+        minute: "2-digit" 
     });
 }
 
@@ -128,40 +125,23 @@ function renderMatches(matches) {
         mapName.textContent = match.map || "Hartă necunoscută";
 
         const result = document.createElement("span");
-        const normalizedResult = String(match.result || "").toLowerCase();
-
-        if (["win", "won", "victory"].includes(normalizedResult)) {
+        if (match.result === "win") {
             result.textContent = "Victorie";
             result.className = "match-result win";
-        } else if (["loss", "lost", "defeat"].includes(normalizedResult)) {
+        } else {
             result.textContent = "Înfrângere";
             result.className = "match-result loss";
-        } else {
-            result.textContent = match.result || "Rezultat indisponibil";
-            result.className = "match-result";
         }
 
         const date = document.createElement("p");
-        date.textContent = `Data: ${formatMatchDate(match.date)}`;
+        // Aici afișăm data și ora procesate
+        date.textContent = `Jucat la: ${formatMatchDate(match.date)}`;
 
         const score = document.createElement("p");
         score.textContent = `Scor: ${match.score || "Indisponibil"}`;
 
         const kd = document.createElement("p");
-
-        const hasKda = [
-            match.kills,
-            match.deaths,
-            match.assists
-        ].some(value => value !== null && value !== undefined);
-
-        if (hasKda) {
-            kd.textContent =
-                `K/D/A: ${match.kills ?? "—"} / ` +
-                `${match.deaths ?? "—"} / ${match.assists ?? "—"}`;
-        } else {
-            kd.textContent = "K/D/A: Indisponibil";
-        }
+        kd.textContent = `K/D/A: ${match.kills ?? "—"} / ${match.deaths ?? "—"} / ${match.assists ?? "—"}`;
 
         card.append(mapName, result, date, score, kd);
         matchesContainer.appendChild(card);
@@ -169,45 +149,15 @@ function renderMatches(matches) {
 }
 
 function renderDashboard(data) {
-    if (!data || typeof data !== "object") {
+    if (!data || !data.player) {
         showState("error", "Datele primite nu sunt valide.");
         return;
     }
 
-    const player = data.player || {};
-    const stats = data.stats || {};
-    const matches = Array.isArray(data.matches) ? data.matches : [];
-
-    const hasData =
-        Boolean(player.nickname) ||
-        stats.elo !== undefined ||
-        stats.kdRatio !== undefined ||
-        stats.winRate !== undefined ||
-        matches.length > 0;
-
-    if (!hasData) {
-        showState("empty");
-        return;
-    }
-
-    playerName.textContent = player.nickname || "Jucător FACEIT";
-
-    renderStats(stats);
-    renderMatches(matches);
-
+    playerName.textContent = data.player.nickname || "Jucător FACEIT";
+    renderStats(data.stats);
+    renderMatches(data.matches);
     showState("dashboard");
 }
 
-function showLoading() {
-    showState("loading");
-}
-
-function showError(message) {
-    showState("error", message);
-}
-
-window.CS2StatsUI = {
-    showLoading,
-    showError,
-    renderDashboard
-};
+showState("empty");
