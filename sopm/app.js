@@ -182,7 +182,6 @@ function renderDashboard(data) {
 
   playerName.textContent = data.player.nickname || "Jucător FACEIT";
 
-  // Aceste valori vin din games.cs2.skill_level și games.cs2.faceit_elo.
   playerLevel.textContent = formatNumber(data.player.level);
   playerElo.textContent = formatNumber(data.player.elo ?? data.stats?.elo);
 
