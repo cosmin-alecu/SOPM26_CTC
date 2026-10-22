@@ -4,9 +4,9 @@
 - Tudor Batrineanu
 - Cosmin Alecu
 ## Descriere
-Scurtă descriere a aplicației și a problemei abordate.
+CS2 FACEIT Stats Tracker este o aplicație web care permite căutarea unui jucător FACEIT după nickname și afișarea profilului și a statisticilor sale pentru Counter-Strike 2.
 ## Template selectat
-Numele template-ului și eventualele adaptări.
+Aplicația folosește o interfață personalizată, construită cu HTML și CSS, fără un template predefinit.
 ## API selectat
 - Nume API:
 - Furnizor:
@@ -37,7 +37,7 @@ reală.
 - Empty:
 - Error:
 ## Responsabilități
-- Student 1:
+- Student 1:Design UI/UX, structură HTML, CSS și pregătirea vizuală a stărilor aplicației.
 - Student 2:
 - Student 3:
 ## Instrucțiuni de configurare și rulare
