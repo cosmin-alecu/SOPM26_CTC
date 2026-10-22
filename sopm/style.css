@@ -238,14 +238,22 @@ h1, h2, h3 { font-family: var(--font-title); text-transform: uppercase; }
 .match-stats-table tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
 .match-stats-table td strong { color: var(--text); font-family: var(--font-title); letter-spacing: 0.5px; }
 
+/* STILURI PENTRU JUCĂTORI (MODALĂ) */
 .player-modal-info { display: flex; align-items: center; gap: 12px; text-align: left; }
 .modal-avatar { width: 32px; height: 32px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(255, 22, 139, 0.4); background: rgba(255, 22, 139, 0.1); }
 .modal-level {
   display: grid; place-items: center; width: 22px; height: 22px; background: rgba(0, 0, 0, 0.6);
   border: 1px solid var(--pink-soft); border-radius: 50%; color: var(--pink); font-size: 11px; font-weight: 700; font-family: var(--font-title); flex-shrink: 0;
 }
-.premade-indicator { width: 6px; height: 32px; border-radius: 3px; flex-shrink: 0; }
 
+/* --- STILIZARE BARA DE SCROLL (NEGRU CU ROZ) --- */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--bg); border-left: 1px solid rgba(255, 22, 139, 0.2); }
+::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 10px; border: 3px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: #ff48a6; box-shadow: 0 0 10px var(--pink); }
+::-webkit-scrollbar-corner { background: var(--bg); }
+
+/* Responsiveness */
 @media (max-width: 820px) {
   body { padding: 24px 16px; background-attachment: scroll; }
   .app-shell { width: min(100%, 720px); }
@@ -288,30 +296,4 @@ h1, h2, h3 { font-family: var(--font-title); text-transform: uppercase; }
   .match-card h3 { font-size: 14px; }
   .match-result.loss { border-color: rgba(255, 88, 96, 0.38); background: rgba(255, 65, 78, 0.1); color: #ff747c; }
   .match-card:has(.match-result.loss):hover { border-color: rgba(255, 72, 84, 0.88); background: linear-gradient( 110deg, rgba(255, 58, 73, 0.2), rgba(22, 10, 14, 0.94) 75% ); box-shadow: 0 0 24px rgba(255, 58, 73, 0.2); }
-}
-
-/* --- STILIZARE BARA DE SCROLL (NEGRU CU ROZ) --- */
-::-webkit-scrollbar {
-  width: 12px; 
-  height: 12px; 
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg); 
-  border-left: 1px solid rgba(255, 22, 139, 0.2); 
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--pink); 
-  border-radius: 10px; 
-  border: 3px solid var(--bg); 
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #ff48a6; 
-  box-shadow: 0 0 10px var(--pink);
-}
-
-::-webkit-scrollbar-corner {
-  background: var(--bg);
 }

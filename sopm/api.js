@@ -28,39 +28,21 @@ export async function fetchAllPlayerData(nickname) {
     }
 
     const [statsResponse, recentResponse, historyResponse] = await Promise.all([
-      fetch(`${BASE_URL}/players/${playerId}/stats/cs2`, {
-        method: "GET",
-        headers
-      }),
-      fetch(`${BASE_URL}/players/${playerId}/games/cs2/stats?offset=0&limit=5`, {
-        method: "GET",
-        headers
-      }),
-      fetch(`${BASE_URL}/players/${playerId}/history?game=cs2&offset=0&limit=30`, {
-        method: "GET",
-        headers
-      })
+      fetch(`${BASE_URL}/players/${playerId}/stats/cs2`, { method: "GET", headers }),
+      fetch(`${BASE_URL}/players/${playerId}/games/cs2/stats?offset=0&limit=5`, { method: "GET", headers }),
+      fetch(`${BASE_URL}/players/${playerId}/history?game=cs2&offset=0&limit=30`, { method: "GET", headers })
     ]);
 
-    const statsData = statsResponse.ok
-      ? await statsResponse.json()
-      : { lifetime: {} };
-
-    const recentData = recentResponse.ok
-      ? await recentResponse.json()
-      : { items: [] };
-
-    const historyData = historyResponse.ok
-      ? await historyResponse.json()
-      : { items: [] };
+    const statsData = statsResponse.ok ? await statsResponse.json() : { lifetime: {} };
+    const recentData = recentResponse.ok ? await recentResponse.json() : { items: [] };
+    const historyData = historyResponse.ok ? await historyResponse.json() : { items: [] };
 
     const lifetime = statsData.lifetime ?? {};
     const matchTimestamps = {};
 
     for (const match of historyData.items ?? []) {
       if (match.match_id) {
-        matchTimestamps[match.match_id] =
-          match.finished_at ?? match.started_at ?? null;
+        matchTimestamps[match.match_id] = match.finished_at ?? match.started_at ?? null;
       }
     }
 
@@ -72,11 +54,7 @@ export async function fetchAllPlayerData(nickname) {
         matchId,
         map: itemStats["Map"] ?? null,
         result: itemStats["Result"] === "1" ? "win" : "loss",
-        date:
-          matchTimestamps[matchId] ??
-          item.created_at ??
-          item.updated_at ??
-          null,
+        date: matchTimestamps[matchId] ?? item.created_at ?? item.updated_at ?? null,
         score: itemStats["Score"] ?? null,
         kills: itemStats["Kills"] ?? null,
         deaths: itemStats["Deaths"] ?? null,
@@ -107,7 +85,6 @@ export async function fetchAllPlayerData(nickname) {
   }
 }
 
-// Funcție care combină statisticile cu profilurile jucătorilor (Poze + Level)
 export async function fetchMatchDetails(matchId) {
   try {
     const [statsResponse, detailsResponse] = await Promise.all([

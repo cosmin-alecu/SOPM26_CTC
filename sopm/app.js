@@ -21,6 +21,17 @@ const matchModal = document.getElementById("match-modal");
 const matchModalBody = document.getElementById("match-modal-body");
 const closeModalBtn = document.getElementById("close-modal");
 
+const homeIcon = document.getElementById("home-icon");
+const homeText = document.getElementById("home-text");
+
+function resetToHome() {
+  nicknameInput.value = "";
+  showState("empty");
+}
+
+homeIcon.addEventListener("click", resetToHome);
+homeText.addEventListener("click", resetToHome);
+
 async function cautaJucator(nickname) {
   showState("loading");
   try {
@@ -50,9 +61,9 @@ function showState(state, message = "") {
   emptyState.hidden = true;
   dashboard.hidden = true;
 
-  if (state === "loading") loadingState.hidden = false;
+  if (state === "empty") emptyState.hidden = false;
+  else if (state === "loading") loadingState.hidden = false;
   else if (state === "error") { errorState.querySelector("p").textContent = message || "A apărut o eroare."; errorState.hidden = false; }
-  else if (state === "empty") emptyState.hidden = false;
   else if (state === "dashboard") dashboard.hidden = false;
 }
 
@@ -146,7 +157,7 @@ async function openMatchModal(matchId) {
       htmlContent += `
         <div class="team-section">
           <div class="team-header">
-            <h3>Echipa ${team.team_id}</h3>
+            <h3 style="text-transform: uppercase;">ECHIPA ${team.team_id}</h3>
             <div class="team-score-info">
               <span class="score-badge">${teamScore}</span>
               ${winStatus}
@@ -171,7 +182,6 @@ async function openMatchModal(matchId) {
         const playerId = player.player_id;
         const pInfo = playersInfo[playerId] || {};
         
-        // Imagine generată automat cu prima literă a numelui (roz neon)
         const fallbackAvatar = `https://ui-avatars.com/api/?name=${player.nickname}&background=ff168b&color=fff&size=64&bold=true`;
         const avatar = pInfo.avatar ? pInfo.avatar : fallbackAvatar;
         const level = pInfo.level || "-";
@@ -180,7 +190,6 @@ async function openMatchModal(matchId) {
           <tr>
             <td style="display: flex; align-items: center; gap: 10px; text-align: left;">
               <div class="player-modal-info">
-                <!-- onerror va înlocui poza cu imaginea generată dacă link-ul de la FACEIT e stricat -->
                 <img src="${avatar}" alt="" class="modal-avatar" onerror="this.src='${fallbackAvatar}'">
                 <span class="modal-level">${level}</span>
                 <strong>${player.nickname}</strong>
@@ -216,13 +225,11 @@ function renderDashboard(data) {
   playerLevel.textContent = formatNumber(data.player.level);
   playerElo.textContent = formatNumber(data.player.elo ?? data.stats?.elo);
 
-  // Imagine generată automat cu prima literă a numelui pentru profilul mare
   const fallbackAvatar = `https://ui-avatars.com/api/?name=${data.player.nickname || "F"}&background=ff168b&color=fff&size=128&bold=true`;
   
   const avatar = document.createElement("img");
   avatar.src = data.player.avatar || fallbackAvatar;
   avatar.alt = ""; 
-  // Dacă imaginea FACEIT e stricată, o înlocuim automat
   avatar.onerror = function() { this.src = fallbackAvatar; };
 
   playerAvatar.replaceChildren(avatar);
