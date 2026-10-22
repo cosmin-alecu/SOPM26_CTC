@@ -106,3 +106,41 @@ export async function fetchAllPlayerData(nickname) {
     throw error;
   }
 }
+
+// Funcție care combină statisticile cu profilurile jucătorilor (Poze + Level)
+export async function fetchMatchDetails(matchId) {
+  try {
+    const [statsResponse, detailsResponse] = await Promise.all([
+      fetch(`${BASE_URL}/matches/${matchId}/stats`, { method: "GET", headers }),
+      fetch(`${BASE_URL}/matches/${matchId}`, { method: "GET", headers })
+    ]);
+    
+    if (!statsResponse.ok || !detailsResponse.ok) {
+      throw new Error("Datele meciului nu au putut fi încărcate.");
+    }
+    
+    const statsData = await statsResponse.json();
+    const detailsData = await detailsResponse.json();
+
+    const playersInfo = {};
+    const factions = detailsData.teams || {};
+    
+    for (const factionKey in factions) {
+      const roster = factions[factionKey].roster || [];
+      roster.forEach(player => {
+        playersInfo[player.player_id] = {
+          avatar: player.avatar || null,
+          level: player.game_skill_level || "-"
+        };
+      });
+    }
+    
+    return {
+        stats: statsData,
+        info: playersInfo
+    };
+  } catch (error) {
+    console.error("[API] Eroare detalii meci:", error.message);
+    throw error;
+  }
+}

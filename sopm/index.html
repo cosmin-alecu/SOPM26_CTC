@@ -19,19 +19,19 @@
 
 <body>
   <div class="flame-container" aria-hidden="true">
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-  <span class="flame-particle"></span>
-</div>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+    <span class="flame-particle"></span>
+  </div>
   <main class="app-shell">
 
     <header class="site-header">
@@ -99,7 +99,6 @@
       </div>
 
       <div class="preview-grid">
-
         <article class="preview-stat">
           <div class="preview-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
@@ -108,7 +107,6 @@
               <path d="m12 5 1 2 2 .3-1.5 1.5.4 2.2-1.9-1-1.9 1 .4-2.2L8 7.3l2-.3 2-2Z"></path>
             </svg>
           </div>
-
           <div>
             <span class="preview-label">ELO</span>
             <strong>—</strong>
@@ -123,7 +121,6 @@
               <path d="M15 6h3v3"></path>
             </svg>
           </div>
-
           <div>
             <span class="preview-label">WIN RATE</span>
             <strong>—</strong>
@@ -138,7 +135,6 @@
               <path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path>
             </svg>
           </div>
-
           <div>
             <span class="preview-label">K/D RATIO</span>
             <strong>—</strong>
@@ -153,12 +149,10 @@
               <path d="M12 7v5l3 2"></path>
             </svg>
           </div>
-
           <div>
             <span class="preview-label">MECIURI RECENTE</span>
             <strong>—</strong>
           </div>
-
           <div class="preview-results" aria-label="Ultimele cinci rezultate">
             <span>−</span>
             <span>−</span>
@@ -167,7 +161,6 @@
             <span>−</span>
           </div>
         </article>
-
       </div>
     </section>
 
@@ -182,7 +175,6 @@
         </div>
 
         <div class="player-info">
-          <p class="eyebrow">// PROFIL IDENTIFICAT</p>
           <h2 id="player-name">Nickname</h2>
           <p class="player-game">COUNTER-STRIKE 2 // FACEIT</p>
         </div>
@@ -203,7 +195,6 @@
       <section class="dashboard-section">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">// METRICE DE PERFORMANȚĂ</p>
             <h2>STATISTICI GLOBALE</h2>
           </div>
         </div>
@@ -232,6 +223,19 @@
       <span class="footer-divider">|</span>
       <span>SECURE CONNECTION</span>
     </footer>
+
+    <!-- Fereastra modală pentru detalii meci -->
+    <div id="match-modal" class="modal-overlay" hidden>
+      <div class="modal-content cyber-panel">
+        <button id="close-modal" class="close-btn" aria-label="Închide">&times;</button>
+        <div class="modal-header">
+          <h2>DETALII MECI</h2>
+        </div>
+        <div id="match-modal-body" class="modal-body">
+          <!-- Conținut generat dinamic -->
+        </div>
+      </div>
+    </div>
 
   </main>
 
