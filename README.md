@@ -8,29 +8,31 @@ CS2 FACEIT Stats Tracker este o aplicație web care permite căutarea unui jucă
 ## Template selectat
 Aplicația folosește o interfață personalizată, construită cu HTML și CSS, fără un template predefinit.
 ## API selectat
-- Nume API:
-- Furnizor:
-- Documentație:
-- Endpoint propus:
-- Metodă HTTP:
-- Necesită autentificare: Da/Nu
-- Metoda de autentificare (fără valoarea secretă):
-- Cheie solicitată de la furnizor: Da/Nu
+- Nume API:FACEIT API
+- Furnizor:https://developers.faceit.com/
+- Documentație:https://docs.faceit.com/docs/
+- Endpoint propus:GET /players?nickname={nickname}&game=cs2 (cauta profilul)
+- Metodă HTTP:GET
+- Necesită autentificare: Da
+- Metoda de autentificare (fără valoarea secretă):: API key transmis în header-ul Authorization folosind formatul Bearer
+- Cheie solicitată de la furnizor: Da
 ## Exemplu de request
-URL sau structură de request cu placeholder-ul `API_KEY`, niciodată cu cheia
-reală.
+GET https://open.faceit.com/data/v4/players?nickname={nickname}&game=cs2
+Authorization: Bearer <API_KEY>
+Accept: application/json
 ## Date utilizate din răspuns
-- câmpul 1;
-- câmpul 2;
-- câmpul 3.
+- Din profil: player_id, nickname, avatar, games.cs2.skill_level și games.cs2.faceit_elo
+- Din statisticile generale: lifetime["Average K/D Ratio"], lifetime["Win Rate %"], lifetime["Matches"], lifetime["Average Headshots %"] și lifetime["Current Win Streak"]
+- Din statisticile meciurilor: Map, Result, Score, Kills, Deaths, Assists, Match Id și data meciului.
 ## Rezultatul testării request-ului
 - Data testării:
 - Cod HTTP sau mesajul de eroare:
 - Observații, fără chei sau tokenuri:
 ## Funcționalități
-- funcționalitatea 1;
-- funcționalitatea 2;
-- funcționalitatea 3.
+- Căutarea unui jucător FACEIT după nickname.
+- Afișarea nickname-ului și a avatarului.
+- Afișarea statisticilor generale: K/D Ratio, Win Rate, număr de meciuri, procentaj headshot-uri și win streak.
+- 
 ## Gestionarea stărilor
 - Loading:
 - Success:
