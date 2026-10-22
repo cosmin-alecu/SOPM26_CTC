@@ -120,4 +120,45 @@ export async function fetchMatchDetails(matchId) {
     console.error("[API] Eroare detalii meci:", error.message);
     throw error;
   }
+  
+}
+
+export async function fetchLeaderboard(region = "EU") {
+  const cacheKey = `faceit_leaderboard_${region}`;
+  const cachedData = sessionStorage.getItem(cacheKey);
+
+  // Verificăm dacă avem date salvate mai noi de 10 minute
+  if (cachedData) {
+    try {
+      const { items, timestamp } = JSON.parse(cachedData);
+      const tenMinutes = 10 * 60 * 1000;
+      if (Date.now() - timestamp < tenMinutes) {
+        return items; // Returnează instant din memorie
+      }
+    } catch (e) {
+      sessionStorage.removeItem(cacheKey);
+    }
+  }
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/rankings/games/cs2/regions/${region}?limit=3`,
+      { method: "GET", headers }
+    );
+    if (!response.ok) throw new Error("Eroare la încărcarea clasamentului.");
+    
+    const data = await response.json();
+    const items = data.items ?? [];
+
+    // Salvăm rezultatul în cache cu timestamp-ul curent
+    sessionStorage.setItem(cacheKey, JSON.stringify({
+      items,
+      timestamp: Date.now()
+    }));
+
+    return items;
+  } catch (error) {
+    console.error(`[API] Eroare leaderboard ${region}:`, error.message);
+    return [];
+  }
 }

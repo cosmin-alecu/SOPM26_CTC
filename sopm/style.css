@@ -253,6 +253,111 @@ h1, h2, h3 { font-family: var(--font-title); text-transform: uppercase; }
 ::-webkit-scrollbar-thumb:hover { background: #ff48a6; box-shadow: 0 0 10px var(--pink); }
 ::-webkit-scrollbar-corner { background: var(--bg); }
 
+/* --- STILIZARE LEADERBOARD --- */
+.leaderboard-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.leaderboard-card {
+  padding: 16px;
+  border: 1px solid rgba(255, 22, 139, 0.45);
+  border-radius: 8px;
+  background: rgba(5, 4, 8, 0.85);
+  box-shadow: inset 0 0 15px rgba(255, 22, 139, 0.05);
+}
+
+.leaderboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 22, 139, 0.25);
+}
+
+.leaderboard-header h3 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text);
+  letter-spacing: 0.5px;
+}
+
+.region-badge {
+  padding: 3px 8px;
+  border: 1px solid var(--pink-soft);
+  border-radius: 4px;
+  background: rgba(255, 22, 139, 0.12);
+  color: var(--pink);
+  font: 700 10px var(--font-title);
+  letter-spacing: 0.5px;
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.leaderboard-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.leaderboard-item:hover {
+  border-color: var(--pink);
+  background: rgba(255, 22, 139, 0.1);
+  transform: translateX(4px);
+}
+
+.leaderboard-player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.leaderboard-rank {
+  width: 22px;
+  color: var(--pink);
+  font: 700 13px var(--font-title);
+}
+
+.leaderboard-name {
+  color: var(--text);
+  font: 600 15px var(--font-text);
+  letter-spacing: 0.3px;
+}
+
+.leaderboard-elo {
+  color: var(--muted);
+  font: 700 12px var(--font-title);
+}
+
+.leaderboard-loading {
+  padding: 15px 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .leaderboard-container {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Responsiveness */
 @media (max-width: 820px) {
   body { padding: 24px 16px; background-attachment: scroll; }
