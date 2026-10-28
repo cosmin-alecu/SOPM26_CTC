@@ -1,4 +1,4 @@
-import { fetchAllPlayerData, fetchMatchDetails } from "./api.js";
+import { fetchAllPlayerData, fetchMatchDetails, fetchLeaderboard} from "./api.js";
 
 const loadingState = document.getElementById("loading-state");
 const errorState = document.getElementById("error-state");
@@ -31,7 +31,56 @@ function resetToHome() {
 
 homeIcon.addEventListener("click", resetToHome);
 homeText.addEventListener("click", resetToHome);
+const leaderboardEU = document.getElementById("leaderboard-eu");
+const leaderboardNA = document.getElementById("leaderboard-na");
 
+function renderLeaderboard(container, players) {
+  container.replaceChildren();
+
+  if (!players.length) {
+    const message = document.createElement("li");
+    message.className = "leaderboard-loading";
+    message.textContent = "Clasamentul nu este disponibil.";
+    container.appendChild(message);
+    return;
+  }
+
+  players.slice(0, 3).forEach((player, index) => {
+    const row = document.createElement("li");
+    row.className = "leaderboard-item";
+
+    const playerInfo = document.createElement("div");
+    playerInfo.className = "leaderboard-player";
+
+    const rank = document.createElement("span");
+    rank.className = "leaderboard-rank";
+    rank.textContent = `#${player.position ?? index + 1}`;
+
+    const name = document.createElement("span");
+    name.className = "leaderboard-name";
+    name.textContent = player.nickname || "Jucător necunoscut";
+
+    const elo = document.createElement("span");
+    elo.className = "leaderboard-elo";
+    elo.textContent = `${player.faceit_elo ?? "—"} ELO`;
+
+    playerInfo.append(rank, name);
+    row.append(playerInfo, elo);
+    container.appendChild(row);
+  });
+}
+
+async function loadLeaderboards() {
+  const [euPlayers, naPlayers] = await Promise.all([
+    fetchLeaderboard("EU"),
+    fetchLeaderboard("NA")
+  ]);
+
+  renderLeaderboard(leaderboardEU, euPlayers);
+  renderLeaderboard(leaderboardNA, naPlayers);
+}
+
+loadLeaderboards();
 async function cautaJucator(nickname) {
   showState("loading");
   try {

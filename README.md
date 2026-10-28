@@ -32,16 +32,19 @@ Accept: application/json
 - Căutarea unui jucător FACEIT după nickname.
 - Afișarea nickname-ului și a avatarului.
 - Afișarea statisticilor generale: K/D Ratio, Win Rate, număr de meciuri, procentaj headshot-uri și win streak.
-- 
+- Afișarea meciurilor recente cu harta, rezultatul, data, scorul și statisticile K/D/A.
+- Deschiderea unei ferestre cu echipele și statisticile jucătorilor atunci când utilizatorul selectează un meci.
+- Afișarea clasamentelor regionale cu primii trei jucători din EU și NA.
+- Revenirea la pagina principală prin apăsarea logo-ului sau a titlului.
 ## Gestionarea stărilor
-- Loading:
-- Success:
-- Empty:
-- Error:
+- Loading:Se afișează un spinner și mesajul „Se accesează profilul jucătorului...” în timp ce se încarcă datele.
+- Success:Se afișează profilul jucătorului, nivelul, Elo-ul, statisticile și istoricul meciurilor.
+- Empty:Înainte de căutare, se afișează mesajul introductiv și previzualizarea statisticilor.
+- Error:Se afișează un mesaj dacă jucătorul nu este găsit sau apare o problemă de conexiune.
 ## Responsabilități
-- Student 1:Design UI/UX, structură HTML, CSS și pregătirea vizuală a stărilor aplicației.
-- Student 2:
-- Student 3:
+- Camelia: Design UI/UX, structură HTML, CSS și pregătirea vizuală a stărilor aplicației.
+- Tudor: Configurarea apelurilor HTTP cu fetch(), gestionarea header-elor de autentificare cu API key, prelucrarea datelor JSON și afișarea jucătorilor și statisticilor când utilizatorul selectează un meci.
+- Cosmin:Manipularea DOM-ului cu Vanilla JavaScript, generarea cardurilor de statistici, afișarea istoricului meciurilor și realizarea clasamentului regional (leaderboard).
 ## Instrucțiuni de configurare și rulare
 În acest laborator, documentați pașii necesari pentru testarea request-ului. Pașii
 de configurare și rulare a aplicației se completează în etapa de implementare.
