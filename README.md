@@ -25,9 +25,9 @@ Accept: application/json
 - Din statisticile generale: lifetime["Average K/D Ratio"], lifetime["Win Rate %"], lifetime["Matches"], lifetime["Average Headshots %"] și lifetime["Current Win Streak"]
 - Din statisticile meciurilor: Map, Result, Score, Kills, Deaths, Assists, Match Id și data meciului.
 ## Rezultatul testării request-ului
-- Data testării:
-- Cod HTTP sau mesajul de eroare:
-- Observații, fără chei sau tokenuri:
+- Data testării:28.10.2026
+- Cod HTTP sau mesajul de eroare:200 OK
+- Observații, fără chei sau tokenuri:Request-urile pentru profilul jucătorului, statisticile generale, meciurile recente și istoricul meciurilor au returnat răspunsuri cu succes.
 ## Funcționalități
 - Căutarea unui jucător FACEIT după nickname.
 - Afișarea nickname-ului și a avatarului.
