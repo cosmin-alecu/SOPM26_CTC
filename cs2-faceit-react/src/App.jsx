@@ -4,21 +4,18 @@ import {
   fetchLeaderboard,
   fetchMatchDetails,
 } from "./Api.js";
+import { formatNumber, getFallbackAvatar } from "./utils.js";
+import MapStatsPage from "./pages/MapStatsPage.jsx";
+import ComparePage from "./pages/ComparePage.jsx";
 import "./style.css";
 
 const REGIONS = ["EU", "NA"];
 
-function formatNumber(value, decimals = 0) {
-  if (value === null || value === undefined || value === "") return "—";
-
-  const number = Number(value);
-  if (!Number.isFinite(number)) return "—";
-
-  return number.toLocaleString("ro-RO", {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
-}
+const PAGES = [
+  { id: "search", label: "CĂUTARE" },
+  { id: "maps", label: "HĂRȚI" },
+  { id: "compare", label: "COMPARĂ" },
+];
 
 function formatMatchDate(timestamp) {
   if (!timestamp) return "Dată indisponibilă";
@@ -40,12 +37,6 @@ function formatMatchDate(timestamp) {
     hour: "2-digit",
     minute: "2-digit",
   });
-}
-
-function getFallbackAvatar(nickname = "CS2") {
-  return `https://ui-avatars.com/api/?name=${encodeURIComponent(
-    nickname
-  )}&background=ff168b&color=fff&size=128&bold=true`;
 }
 
 function PreviewStat({ icon, label, showResults = false }) {
@@ -489,6 +480,7 @@ function App() {
   });
 
   const [selectedMatchId, setSelectedMatchId] = useState(null);
+  const [page, setPage] = useState("search");
 
   useEffect(() => {
     let isActive = true;
@@ -560,9 +552,11 @@ function App() {
     setError("");
     setLoading(false);
     setSelectedMatchId(null);
+    setPage("search");
   }
 
   const showEmpty = !loading && !error && !playerData;
+  const isSearchPage = page === "search";
 
   return (
     <>
@@ -602,7 +596,32 @@ function App() {
               CS2 FACEIT <span>TRACKER</span>
             </h1>
           </div>
+
+          <nav className="site-nav" aria-label="Pagini">
+            {PAGES.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`nav-link ${page === item.id ? "active" : ""}`}
+                aria-current={page === item.id ? "page" : undefined}
+                onClick={() => setPage(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
         </header>
+
+        {page === "maps" && (
+          <MapStatsPage playerData={playerData} onPlayerLoaded={setPlayerData} />
+        )}
+
+        {page === "compare" && (
+          <ComparePage initialNickname={playerData?.player?.nickname || ""} />
+        )}
+
+        {isSearchPage && (
+        <>
 
         <section className="search-section" aria-label="Caută un jucător">
           <form id="search-form" className="cyber-form" onSubmit={handleSearch}>
@@ -732,6 +751,8 @@ function App() {
             data={playerData}
             onSelectMatch={setSelectedMatchId}
           />
+        )}
+        </>
         )}
 
         <footer className="site-footer">

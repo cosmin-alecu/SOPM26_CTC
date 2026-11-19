@@ -102,6 +102,25 @@ app.get("/api/player", async (req, res) => {
     ]);
 
     const lifetime = statsData.lifetime || {};
+
+    // Statisticile pe hărți vin în "segments" (câte un segment pentru fiecare hartă)
+    const maps = (statsData.segments || [])
+      .filter((segment) => segment.type === "Map")
+      .map((segment) => {
+        const mapStats = segment.stats || {};
+
+        return {
+          name: segment.label || "Hartă necunoscută",
+          image: segment.img_regular || segment.img_small || null,
+          matches: mapStats["Matches"] ?? null,
+          wins: mapStats["Wins"] ?? null,
+          winRate: mapStats["Win Rate %"] ?? null,
+          kdRatio: mapStats["Average K/D Ratio"] ?? mapStats["K/D Ratio"] ?? null,
+          headshotPercent:
+            mapStats["Average Headshots %"] ?? mapStats["Headshots per Match"] ?? null,
+          averageKills: mapStats["Average Kills"] ?? null,
+        };
+      });
     const cs2 = playerData.games?.cs2 || {};
     const matchDates = {};
 
@@ -149,6 +168,7 @@ app.get("/api/player", async (req, res) => {
         winStreak: lifetime["Current Win Streak"] ?? null,
       },
       matches,
+      maps,
     });
   } catch (error) {
     sendApiError(res, error);
