@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "CS2 FACEIT Tracker",
+    "slug": "cs2-faceit-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "cs2faceit",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#08070b",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sopm.cs2faceit"
+    },
+    "android": {
+      "package": "com.sopm.cs2faceit",
+      "adaptiveIcon": {
+        "backgroundColor": "#08070b",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "backgroundColor": "#08070b"
+        }
+      ]
+    ]
+  }
+}

@@ -88,6 +88,8 @@ h1, h2, h3 { font-family: var(--font-title); text-transform: uppercase; }
   display: grid; flex: 0 0 58px; width: 58px; height: 58px; place-items: center; border: 1px solid var(--pink); border-radius: 8px;
   background: rgba(255, 22, 139, .12); color: var(--pink); font: 900 32px var(--font-title); box-shadow: inset 0 0 18px rgba(255, 22, 139, .12);
 }
+.brand-icon { cursor: pointer; overflow: hidden; border: none; background: none; box-shadow: none; flex-basis: 80px; width: 80px; height: 80px; }
+.brand-icon img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .brand-content { min-width: 0; }
 .brand-content h1 { margin: 0; font: 800 clamp(1.35rem, 3.2vw, 2.35rem) var(--font-title); letter-spacing: 1.4px; }
 .brand-content h1 span, .preview-heading h2 span { color: var(--pink); }
@@ -370,7 +372,7 @@ h1, h2, h3 { font-family: var(--font-title); text-transform: uppercase; }
   body { padding: 16px 12px 24px; }
   .app-shell { width: 100%; gap: 13px; }
   .site-header { min-height: 72px; padding: 12px; gap: 12px; }
-  .brand-icon { flex-basis: 48px; width: 48px; height: 48px; font-size: 27px; }
+  .brand-icon { flex-basis: 62px; width: 62px; height: 62px; font-size: 27px; }
   .brand-content h1 { font-size: 1.12rem; }
   .search-section { min-height: 0; padding: 14px; }
   #search-form.cyber-form { grid-template-columns: minmax(0, 1fr) 112px; gap: 9px; }

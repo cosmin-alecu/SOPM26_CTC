@@ -4,10 +4,11 @@
 
 **Echipa:** Boghici Camelia-Ioana, Alecu Cosmin, Batrineanu Tudor-Mihai
 
-Proiectul a fost realizat în două etape:
+Proiectul a fost realizat în trei etape:
 
 1. **Prima parte:** aplicația web în HTML, CSS și Vanilla JavaScript (folderul `sopm/`).
 2. **A doua parte:** aplicația a fost mutată în React, cu un server Express care face legătura cu FACEIT API (folderul `cs2-faceit-react/`).
+3. **A treia parte:** aplicația mobilă pentru iOS și Android, în React Native cu Expo (folderul `cs2-faceit-mobile/`). Folosește același server Express, deci cheia FACEIT rămâne pe server.
 
 ---
 
@@ -22,6 +23,11 @@ Proiectul a fost realizat în două etape:
 - A transformat structura HTML în componente React (`App.jsx`): `PlayerDashboard`, `StatCard`, `LeaderboardCard`, `PreviewStat` și `MatchModal`.
 - A adaptat stilurile CSS pentru React (`style.css`) și a păstrat același aspect vizual ca în prima parte.
 - A înlocuit lucrul direct cu DOM-ul cu starea componentelor (`useState`, `useEffect`) pentru căutare, încărcare, erori și fereastra cu detaliile meciului.
+
+### A treia parte: designul aplicației mobile
+- A transpus tema neon a site-ului pentru mobil (`src/theme.js`): aceleași culori și fonturile Orbitron și Rajdhani, încărcate cu `@expo-google-fonts`.
+- A creat componentele comune (`src/components/ui.js`): fundalul FACEIT, antetul cu logo, câmpul de căutare, butonul, cardurile de încărcare, eroare și informare, titlurile de secțiune și avatarul cu imagine de rezervă.
+- A adăugat noul logo: ca favicon și în antetul site-ului React, apoi ca iconiță a aplicației (iOS și Android) și pe ecranul de pornire (splash).
 
 ---
 
@@ -42,6 +48,11 @@ Proiectul a fost realizat în două etape:
 - Pagina tratează erorile: jucător negăsit, același jucător introdus de două ori și starea de încărcare.
 - A adăugat meniul de navigare din antet (Căutare / Hărți / Compară).
 
+### A treia parte: navigarea și ecranele Căutare și Compară
+- A organizat navigarea aplicației mobile cu Expo Router (`src/app/`): bara de tab-uri de jos (Căutare / Hărți / Compară) și ecranul cu detaliile meciului, deschis ca fereastră modală.
+- A realizat ecranul **Căutare** (`src/app/(tabs)/index.js`): Top 3 EU și NA, profilul jucătorului, statisticile globale și ultimele meciuri. Apăsarea pe un meci deschide detaliile lui.
+- A adaptat pagina **Compară** pentru telefon (`src/app/(tabs)/compare.js`), cu aceleași reguli ca pe site: încărcare în paralel, valoarea mai bună evidențiată și scorul general.
+
 ---
 
 ## Batrineanu Tudor-Mihai
@@ -59,12 +70,19 @@ Proiectul a fost realizat în două etape:
 - Cea mai bună și cea mai slabă hartă (după win rate, cu minimum 3 meciuri jucate) sunt evidențiate automat.
 - A mutat funcțiile comune de formatare în `src/utils.js`, ca să poată fi folosite de toate paginile.
 
+### A treia parte: conexiunea cu serverul și ecranele Hărți și Detalii meci
+- A scris clientul API al aplicației mobile (`src/api.js`). Acesta apelează serverul Express, nu direct FACEIT, așa că cheia API nu ajunge în aplicație. Adresa serverului se ia automat din IP-ul calculatorului sau din `EXPO_PUBLIC_API_URL`.
+- A creat `src/PlayerContext.js`, prin care jucătorul căutat este partajat între tab-uri, la fel ca pe site.
+- A adaptat pagina **Hărți** pentru telefon (`src/app/(tabs)/maps.js`): sortarea se face cu butoane, iar cea mai bună și cea mai slabă hartă sunt evidențiate.
+- A realizat ecranul **Detalii meci** (`src/app/match/[id].js`): cele două echipe, scorul, rezultatul și statisticile fiecărui jucător.
+- A rulat aplicația pe telefon cu Expo Go și a verificat legătura cu serverul din rețeaua locală.
+
 ---
 
 ## Rezumat
 
-| Membru | Prima parte | A doua parte |
-|---|---|---|
-| Boghici Camelia-Ioana | HTML și CSS | Trecerea HTML/CSS în React |
-| Alecu Cosmin | `app.js` (logica aplicației și afișarea în DOM) | Pagina „Compară jucători” și meniul de navigare |
-| Batrineanu Tudor-Mihai | `api.js` (conexiunea cu FACEIT API) | Pagina „Statistici pe hărți” și extinderea serverului |
+| Membru | Prima parte | A doua parte | A treia parte (mobil) |
+|---|---|---|---|
+| Boghici Camelia-Ioana | HTML și CSS | Trecerea HTML/CSS în React | Tema, componentele comune, logo-ul și iconița aplicației |
+| Alecu Cosmin | `app.js` (logica aplicației și afișarea în DOM) | Pagina „Compară jucători” și meniul de navigare | Navigarea cu Expo Router și ecranele Căutare și Compară |
+| Batrineanu Tudor-Mihai | `api.js` (conexiunea cu FACEIT API) | Pagina „Statistici pe hărți” și extinderea serverului | Conexiunea cu serverul, ecranele Hărți și Detalii meci, rularea pe telefon |

@@ -579,7 +579,7 @@ function App() {
               if (event.key === "Enter") resetToHome();
             }}
           >
-            F
+            <img src="/logo.png" alt="" />
           </div>
 
           <div
